@@ -498,19 +498,19 @@ while True:
                 speak = speak + "The answer is " + answer
 
 
-            elif "don't listen" in text or "do not listen" in text or "stop listening" in text: #!needs to be created into a function
-                talk("for how much time do you want me to sleep?")
-                a = int(rec_audio())
-                if "hours" in a:
-                    time.sleep(a*60*60)
-                    speak = speak + str(a) + " hours completed. Now you can ask me anything!"
-                elif "minutes" in a:
-                    time.sleep(a*60)
-                    speak = speak + str(a) + " minutes completed. Now you can ask me anything!"
+            # elif "don't listen" in text or "do not listen" in text or "stop listening" in text: #!needs to be created into a function and re-code the whole thing
+            #     talk("for how much time do you want me to sleep?")
+            #     a = int(rec_audio())
+            #     if "hours" in a:
+            #         time.sleep(a*60*60)
+            #         speak = speak + str(a) + " hours completed. Now you can ask me anything!"
+            #     elif "minutes" in a:
+            #         time.sleep(a*60)
+            #         speak = speak + str(a) + " minutes completed. Now you can ask me anything!"
 
-                else:
-                    time.sleep(a)
-                    speak = speak + str(a) + " seconds completed. Now you can ask me anything!"
+            #     else:
+            #         time.sleep(a)
+            #         speak = speak + str(a) + " seconds completed. Now you can ask me anything!"
 
             
 
