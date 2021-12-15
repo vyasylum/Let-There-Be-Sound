@@ -1,0 +1,37 @@
+<html>
+
+<head>
+  <script src='../node_modules/@pdftron/webviewer/webviewer.min.js'></script>
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="container-left">
+      <div class="text-box">
+        <p id="title">LTBS</p>
+        <p id="subtitle">Let There Be Sound</p>
+        <p id="info">Invoke a command by saying {udimama} or open a file</p>
+      </div>
+      <div class="buttonbar">
+        <button id='open'>Open File</button>
+        <button id="save">Save File</button>
+      </div>
+
+    </div>
+
+    <div class="container-right">
+      <div class="text-box">
+        <p id="pyconsole">Enable assistant</p>
+      </div>
+      <div class="buttonbar">
+        <button id='assistant'>I</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="webviewer" id="viewer"></div>
+  <script defer src="render.js"></script>
+</body>
+
+</html>

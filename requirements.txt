@@ -1,0 +1,14 @@
+typing
+pyttsx3
+gtts 
+wheel
+playsound
+wikipedia
+winshell
+pyjokes
+pytesseract
+wolframalpha
+PyAudio
+SpeechRecognition
+numpy
+matplotlib
