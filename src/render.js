@@ -36,9 +36,7 @@ WebViewer(
   };
 
   assistantBtn.onclick = async () => {
-    const pyshell = new python.PythonShell(
-      "../bitches be ridin/engine/azriel.py"
-    );
+    const pyshell = new python.PythonShell("../engine/azriel.py");
     pyshell.on("message", function (message) {
       pyconsole.innerHTML = message;
       return message;
