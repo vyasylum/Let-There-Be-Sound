@@ -26,7 +26,7 @@ body {
 }
 
 .text-box {
-  padding: auto;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-content: center;

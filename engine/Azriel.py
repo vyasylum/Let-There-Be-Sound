@@ -58,6 +58,8 @@ def greetings():
         talk("Good evening, how may i help you?")
 
 
+print('intiializing...')
+sys.stdout.flush()
 greetings()
 
 
