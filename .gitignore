@@ -32,4 +32,5 @@ yarn-error.log*
 
 #engine
 /engine/__pycache__
+/engine/venv
 Audio.mp3
