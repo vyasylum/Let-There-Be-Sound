@@ -45,7 +45,17 @@ engine.setProperty('voice', voices[1].id)  # changing index #changing the voice 
 def talk(audio):
     engine.say(audio)
     engine.runAndWait() #pass a string and call this func out, it will speak the string
-talk("Good evening, How can I help you?")
+
+
+def greetings():
+    hour = int(datetime.datetime.now().hour)
+    if hour>=12 and hour<12:
+        talk("Good morning, how may I help you?")
+    elif hour>12 and hour<16:
+        talk("Good morning, how may I help you?")
+    else:
+        talk("Good evening, how may i help you?")
+greetings()
 
 
 def rec_audio(): #works
@@ -515,6 +525,8 @@ while True:
             
 
             elif "exit" in text or "quit" in text:
+                exit_responses = ["Bye!","See you!","Goodbye!","Bye Bye!", "You can always press the hotkey to call me again! Bubye!"]
+                talk(random.choices(exit_responses))
                 break
 
             
