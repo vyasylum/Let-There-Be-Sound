@@ -16,11 +16,23 @@ Wikipedia
 
 # Installation
 
+## Prerequisites
+
+Python 3x and the latest stable Node.js version with it's stable npm
+
 ```
 git clone https://github.com/vyasylum/Let-There-Be-Sound.git
 cd Let-There-Be-Sound
 pip install -r requirements.txt
 npm install
+```
+
+**NOTE: make sure to install appropriate wheel for python modules (eg: PyAudio) for your operating system and python version at https://www.lfd.uci.edu/~gohlke/pythonlibs**
+
+_Download the .whl file for your machine and run_
+
+```
+pip install some-package.whl
 ```
 
 ## Run
