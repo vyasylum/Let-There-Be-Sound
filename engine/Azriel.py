@@ -16,7 +16,8 @@ import ctypes
 import winshell
 import subprocess
 import pyjokes
-import smtplib # client session object that can be used to send mail to any internet machine with an SMTP or ESMTP listener daemon.
+# client session object that can be used to send mail to any internet machine with an SMTP or ESMTP listener daemon.
+import smtplib
 import requests
 import json
 import braille
@@ -27,61 +28,69 @@ import cv2
 import pytesseract
 from tkinter import *
 from tkinter import filedialog
+import sys
 
 
 #!import the ocr file here and write the braille commands
 
 
+warnings.filterwarnings("ignore")  # ignores all warnings
 
+engine = pyttsx3.init()  # initializing pyttsx3
+voices = engine.getProperty('voices')  # getting the deets of current voice
+# engine.setProperty('voice', voices[0].id)  # changing index #changing the voice to male
+# changing index #changing the voice to female
+engine.setProperty('voice', voices[1].id)
 
-
-warnings.filterwarnings("ignore") #ignores all warnings
-
-engine = pyttsx3.init() #initializing pyttsx3
-voices = engine.getProperty('voices') #getting the deets of current voice
-#engine.setProperty('voice', voices[0].id)  # changing index #changing the voice to male 
-engine.setProperty('voice', voices[1].id)  # changing index #changing the voice to female
 
 def talk(audio):
     engine.say(audio)
-    engine.runAndWait() #pass a string and call this func out, it will speak the string
+    engine.runAndWait()  # pass a string and call this func out, it will speak the string
 
 
 def greetings():
     hour = int(datetime.datetime.now().hour)
-    if hour>=12 and hour<12:
+    if hour >= 12 and hour < 12:
         talk("Good morning, how may I help you?")
-    elif hour>12 and hour<16:
+    elif hour > 12 and hour < 16:
         talk("Good morning, how may I help you?")
     else:
         talk("Good evening, how may i help you?")
+
+
 greetings()
 
 
-def rec_audio(): #works
-    recog = sr.Recognizer() #inistializing the recogniser
+def rec_audio():  # works
+    recog = sr.Recognizer()  # inistializing the recogniser
 
-    with sr.Microphone() as source: 
+    with sr.Microphone() as source:
         print("Listening...")
+        sys.stdout.flush()
         audio = recog.listen(source)
-#using google speech recognition to recognise the speech
+# using google speech recognition to recognise the speech
 
     data = " "
     try:
         data = recog.recognize_google(audio)
         print("You said: " + data)
+        sys.stdout.flush()
 
     except sr.UnknownValueError:
         print("Assistant could not understand the audio")
+        sys.stdout.flush()
 
     except sr.RequestError as ex:
         print("Request Error from Google Speech Recognition" + ex)
+        sys.stdout.flush()
     return data
+
 
 def response(text):
     print(text)
+    sys.stdout.flush()
 
-    tts = gTTS(text=text, lang="en",tld='com')
+    tts = gTTS(text=text, lang="en", tld='com')
 
     audio = "Audio.mp3"
     tts.save(audio)
@@ -90,21 +99,28 @@ def response(text):
 
     os.remove(audio)
 
+
 def call(text):
     action_call = "hello"
- 
-    text= text.lower()
+
+    text = text.lower()
     # print(text)
+    # sys.stdout.flush()
 
     if action_call in text:
         # print('tiru lub')
+        # sys.stdout.flush()
         # print(text.upper())
+        # sys.stdout.flush()
         return True
-        
+
     else:
         # print(":/")
+        # sys.stdout.flush()
         # print(text)
+        # sys.stdout.flush()
         return False
+
 
 def openFile():
     root = Tk()
@@ -112,45 +128,37 @@ def openFile():
     root.update()
     filepath = filedialog.askopenfilename(initialdir="D:\Projects\Blind Assistant\raw\test_images",
                                           title="Open file okay?",
-                                          filetypes= (("text files","*.txt"),
-                                          ("all files","*.*")))
-    file = open(filepath,'r')
+                                          filetypes=(("text files", "*.txt"),
+                                                     ("all files", "*.*")))
+    file = open(filepath, 'r')
     #tkinter.Label.config(path = filepath)
     print(filepath)
-    #print(file.read())
+    sys.stdout.flush()
+    # print(file.read())
+    # sys.stdout.flush()
     file.close()
 
     root.destroy()
 
-
-
-
-
-
-    pytesseract.pytesseract.tesseract_cmd=r'C:\Program Files\Tesseract-OCR\\tesseract.exe'
-    img=cv2.imread(filepath)
-    #img=cv2.resize(img,(400,450))
-    cv2.imshow("image",img)
-    result=pytesseract.image_to_string(img)
+    pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\\tesseract.exe'
+    img = cv2.imread(filepath)
+    # img=cv2.resize(img,(400,450))
+    cv2.imshow("image", img)
+    result = pytesseract.image_to_string(img)
     print(result)
+    sys.stdout.flush()
     talk(result)
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
 
-
-
-
-    
-
 def today_date():
-    now= datetime.datetime.now() #month,date,hours,min,secs
-    date_now= datetime.datetime.today() #this will give the present date and time
-    week_now = calendar.day_name[date_now.weekday()] #day of the week
-    month_now= now.month
-    day_now= now.day
-
+    now = datetime.datetime.now()  # month,date,hours,min,secs
+    date_now = datetime.datetime.today()  # this will give the present date and time
+    week_now = calendar.day_name[date_now.weekday()]  # day of the week
+    month_now = now.month
+    day_now = now.day
 
     months = [
         "January",
@@ -162,7 +170,7 @@ def today_date():
         "July",
         "August",
         "September",
-        "October",  
+        "October",
         "November",
         "December",
     ]
@@ -205,30 +213,35 @@ def today_date():
 
 
 def greeting(text):
-    greet = ["Hello", "Hey","Hi","Supp","Hey there","Greetings","Howdy","wassup","Henlo","yo"]
+    greet = ["Hello", "Hey", "Hi", "Supp", "Hey there",
+             "Greetings", "Howdy", "wassup", "Henlo", "yo"]
 
-    response =["Hey yourself!","Hello!","Hi","Greetings","hey hey hey!","yo","wassup","Hey","Hey there"]
+    response = ["Hey yourself!", "Hello!", "Hi", "Greetings",
+                "hey hey hey!", "yo", "wassup", "Hey", "Hey there"]
 
     for word in text.split():
         if word.lower() in greet:
             return random.choices(response)
 
     return ""
-    
- 
+
+
 def wiki_person(text):
-    list_wiki=text.split()
-    for i in range(0,len(list_wiki)):
+    list_wiki = text.split()
+    for i in range(0, len(list_wiki)):
         if i + 3 <= len(list_wiki)-1 and list_wiki[i].lower() == "who" and list_wiki[i+1].lower() == "is":
             return list_wiki[i+2] + " " + list_wiki[i+3]
 
-def note(text): #this needs more work
+
+def note(text):  # this needs more work
     date = datetime.datetime.now()
-    file_name = str(date).replace(":", "-") + "-note.txt" #using replace method to replace ":" with "-"
-    with open(file_name,"w") as f:
+    # using replace method to replace ":" with "-"
+    file_name = str(date).replace(":", "-") + "-note.txt"
+    with open(file_name, "w") as f:
         f.write(text)
 
     subprocess.Popen(["notepad.exe", file_name])
+
 
 def send_email(to, content):
     server = smtplib.SMTP("smtp.gmail.com", 587)
@@ -239,11 +252,13 @@ def send_email(to, content):
     server.sendmail("atharvvyas0202@gmail.com", to, content)
     server.close()
 
+
 def test(text):
     if "test" in text.lower():
         talk('What is your answer?')
         answer = rec_audio()
         print("recording answer")
+        sys.stdout.flush()
         if "yes" in answer.lower():
             talk("yes it works")
         elif "no" in answer.lower():
@@ -252,19 +267,14 @@ def test(text):
         talk("test doesn't work")
 
 
-
-
 #braille.textToBraille("Hello world")----WORKS
 #braille.brailleToSpeechArray(['⠓⠑⠇⠇⠕ ⠺⠕⠗⠇⠙'])
 #braille.imageToText(r"D:\Projects\Blind Assistant\test\hello_world.jpeg")
-
-
 while True:
     try:
         text = rec_audio()
         speak = ""
         #talk("I'm ready")
-
 
         if call(text):
 
@@ -274,10 +284,9 @@ while True:
                 get_today = today_date()
                 speak = speak + " " + get_today
 
-            
             elif "test" in text:
                 test(text)
-                
+
             elif "time" in text:
                 now = datetime.datetime.now()
                 meridiem = ""
@@ -292,12 +301,14 @@ while True:
                     minute = "0" + str(now.minute)
                 else:
                     minute = str(now.minute)
-                speak = speak + " " + "It is " + str(hour) + ":" + minute + " " + meridiem + " ."
+                speak = speak + " " + "It is " + \
+                    str(hour) + ":" + minute + " " + meridiem + " ."
 
             elif "wikipedia" in text or "Wikipedia" in text:
                 if "who is" in text:
                     person = wiki_person(text)
-                    wiki = wikipedia.summary(person, sentences = 2, auto_suggest = False)
+                    wiki = wikipedia.summary(
+                        person, sentences=2, auto_suggest=False)
                     speak = speak + " " + wiki
 
             elif "who are you" in text or "define yourself" in text:
@@ -328,25 +339,21 @@ while True:
                     braille.textToBraille(ind)
 
                 elif "image to Braille" in text.lower():
-                    talk("works lol")   
-                    #? img = Image.open("name")
-                    #? str = pytesseract.image_to_string(img)
-                    #? braille.textToBraille(str)
+                    talk("works lol")
+                    # ? img = Image.open("name")
+                    # ? str = pytesseract.image_to_string(img)
+                    # ? braille.textToBraille(str)
                 elif "image to speech" in text.lower():
                     talk("image to speech")
-                    #? img = Image.open("name")
-                    #? str = pytesseract.image_to_string(img)
-                    #? speak = speak + str(str)
+                    # ? img = Image.open("name")
+                    # ? str = pytesseract.image_to_string(img)
+                    # ? speak = speak + str(str)
 
             elif "text to speech" in text.lower():
                 openFile()
 
-
-            
-            
-            elif "open" in text.lower(): #!Try to make it without using PATH
-            #**os.system("program_name") # To open any program by their name recognized by windows
-
+            elif "open" in text.lower():  # !Try to make it without using PATH
+                # **os.system("program_name") # To open any program by their name recognized by windows
 
                 """Change this code, make it shorter and customisable."""
 
@@ -405,7 +412,7 @@ while True:
 
                 else:
                     speak = speak + "Application not available."
-                
+
             elif "youtube" in text.lower():
                 ind = text.lower().split().index("youtube")
                 search = text.split()[ind + 1:]
@@ -431,16 +438,13 @@ while True:
                 )
                 speak = speak + "Searching " + str(search) + " on google"
 
-
             elif "empty recycle bin" in text:
                 winshell.recycle_bin().empty(
                     confirm=True, show_progress=False, sound=True
                 )
                 speak = speak + "Recycle Bin Emptied"
 
-        
-
-            elif "note" in text or "remember this" in text: #this needs more work
+            elif "note" in text or "remember this" in text:  # this needs more work
                 talk("What would you like me to write down?")
                 note_text = rec_audio()
                 note(note_text)
@@ -449,14 +453,13 @@ while True:
             elif "joke" in text:
                 speak = speak + pyjokes.get_joke()
 
-
-            elif "where is" in text: #MAPS needs nore work
+            elif "where is" in text:  # MAPS needs nore work
                 ind = text.lower().split().index("is")
                 location = text.split()[ind + 1:]
                 url = "https://www.google.com/maps/place/" + "".join(location)
                 speak = speak + "This is where " + str(location) + " is."
                 webbrowser.open(url)
-            
+
             # elif "email to computer" in text or "gmail to computer" in text or "mail to computer" in text:
             #     try:
             #         talk("What should I say?")
@@ -466,9 +469,10 @@ while True:
             #         speak = speak + "Email has been sent !"
             #     except Exception as e:
             #         print(e)
+            #         sys.stdout.flush()
             #         talk("I am not able to send this email")
 
-            elif "mail" in text or "email" in text or "gmail" in text or "email to computer" in text or "gmail to computer" in text or "mail to computer" in text :
+            elif "mail" in text or "email" in text or "gmail" in text or "email to computer" in text or "gmail to computer" in text or "mail to computer" in text:
                 try:
                     talk("What should I say?")
                     content = rec_audio()
@@ -478,6 +482,7 @@ while True:
                     speak = speak + "Email has been sent !"
                 except Exception as e:
                     print(e)
+                    sys.stdout.flush()
                     speak = speak + "I am not able to send this email"
 
             elif "calculate" in text:
@@ -507,7 +512,6 @@ while True:
                 answer = next(res.results).text
                 speak = speak + "The answer is " + answer
 
-
             # elif "don't listen" in text or "do not listen" in text or "stop listening" in text: #!needs to be created into a function and re-code the whole thing
             #     talk("for how much time do you want me to sleep?")
             #     a = int(rec_audio())
@@ -522,19 +526,11 @@ while True:
             #         time.sleep(a)
             #         speak = speak + str(a) + " seconds completed. Now you can ask me anything!"
 
-            
-
             elif "exit" in text or "quit" in text:
-                exit_responses = ["Bye!","See you!","Goodbye!","Bye Bye!", "You can always press the hotkey to call me again! Bubye!"]
+                exit_responses = ["Bye!", "See you!", "Goodbye!", "Bye Bye!",
+                                  "You can always press the hotkey to call me again! Bubye!"]
                 talk(random.choices(exit_responses))
                 break
-
-            
-            
-
-                    
-
-
 
                 """OPTIONAL"""
                 # elif "change background" in text or "change wallpaper" in text:
@@ -554,27 +550,15 @@ while True:
                 #     playsound.playsound(random)
                 """/OPTIONAL"""
         # else:
-        
+
         #     #rec_audio()
-        #     talk("I don't know that!")  
-            
+        #     talk("I don't know that!")
 
-
-            
-
-
-
-
-            
-                
-                
         response(speak)
-        
 
     except:
-            if "hello" not in text:
-                continue
-            else:
-                #rec_audio()
-                talk("I don't know that!")
-
+        if "hello" not in text:
+            continue
+        else:
+            # rec_audio()
+            talk("I don't know that!")
