@@ -81,3 +81,13 @@ button:hover {
 #pyconsole {
   font-family: "Courier New", Courier, monospace;
 }
+
+#assistant {
+  outline: none;
+  border: 0.25em solid rgb(217, 176, 255);
+  color: rgb(217, 176, 255);
+  display: block;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
