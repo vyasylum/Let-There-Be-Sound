@@ -50,7 +50,7 @@ def talk(audio):
 
 def greetings():
     hour = int(datetime.datetime.now().hour)
-    if hour >= 12 and hour < 12:
+    if hour > 0 and hour <= 12:
         talk("Good morning, how may I help you?")
     elif hour > 12 and hour < 16:
         talk("Good morning, how may I help you?")
