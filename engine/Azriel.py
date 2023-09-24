@@ -268,6 +268,13 @@ def test(text):
     else:
         talk("test doesn't work")
 
+# def wiki(text):
+#     if "who is" in text:
+#         person = wiki_person(text)
+#         wiki = wikipedia.summary(
+#             person, sentences=2, auto_suggest=False)
+#         speak = speak + " " + wiki
+
 
 #braille.textToBraille("Hello world")----WORKS
 #braille.brailleToSpeechArray(['⠓⠑⠇⠇⠕ ⠺⠕⠗⠇⠙'])
@@ -307,7 +314,7 @@ while True:
                     str(hour) + ":" + minute + " " + meridiem + " ."
 
             elif "wikipedia" in text or "Wikipedia" in text:
-                if "who is" in text:
+                 if "who is" in text:
                     person = wiki_person(text)
                     wiki = wikipedia.summary(
                         person, sentences=2, auto_suggest=False)
